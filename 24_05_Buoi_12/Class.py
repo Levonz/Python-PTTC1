@@ -4,9 +4,9 @@ class PTTC1():
     age = 0
     country = 'HN'
     #Phương thức
-    def hoc():
+    def hoc(self):
         print('Phải học Python')
-    def thi():
+    def thi(self):
         print('Phải thi Python')
      
 student1 = PTTC1()
@@ -27,3 +27,5 @@ student3.country = 'Bac Ninh'
 print(student1.name)
 print(student2.name)
 print(student3.name)
+
+student1.hoc()
