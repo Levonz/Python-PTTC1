@@ -23,11 +23,9 @@ for i in range(0,n):
               ,input('Điểm Tin học: '))
     list_hoc_vien.append(t)
     
-#print('{:<10} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(
-#    'Name','Age','Country','Class','English','Tin'))
-print('%-15s %-15s %-15s %-15s %-15s %-15s'%(
+print('{:<10} {:<7} {:<10} {:<10} {:<10} {:<10}'.format(
     'Name','Age','Country','Class','English','Tin'))
 for i in list_hoc_vien:
-    print('%-15s %-15s %-15s %-15s %-15s %-15s'%(
+    print('{:<10} {:<7} {:<10} {:<10} {:<10} {:<10}'.format(
         i.name,i.age,i.country,i.lop,i.diem_TA,i.diem_tin))
     
