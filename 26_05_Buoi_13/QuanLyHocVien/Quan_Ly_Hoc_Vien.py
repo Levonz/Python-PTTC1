@@ -24,11 +24,16 @@ class QuanLyHocVien:
             QuanLyHocVien.list_hoc_vien.append(hoc_vien)
     
     def Sua_Thong_Tin_Hoc_Vien(t):
-        QuanLyHocVien.list_hoc_vien[t-1].name = input('Nhập tên: ')   
-        QuanLyHocVien.list_hoc_vien[t-1].age = int(input('Nhập tuổi: '))  
+        for i in QuanLyHocVien.list_hoc_vien:
+            if i.id ==t:
+                i.name = input('Nhập tên: ')   
+                i.age = int(input('Nhập tuổi: '))  
     
     def Xoa_Hoc_Vien(t):
-        QuanLyHocVien.list_hoc_vien.pop(t-1) 
+        for i in QuanLyHocVien.list_hoc_vien:
+            if i.id == t:
+                QuanLyHocVien.list_hoc_vien.remove(i)
+         
         
     def Hien_Thi_Hoc_Vien():
         print('{:<4} {:<10} {:<7} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(
