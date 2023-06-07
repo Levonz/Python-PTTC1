@@ -1,8 +1,8 @@
-from Quan_Ly_Hoc_Vien import *
-test = QuanLyHocVien()
+from QuanLy import *
+
 while(True):
     print("|--------------------------------------|")
-    print("|----Chuong trinh quan ly hoc vien     |")
+    print("|----Chuong trinh quan ly nhan vien    |")
     print("|1. Chuc nang Thêm                     |")
     print("|2. Chuc nang Sửa                      |")
     print("|3. Chuc nang Xóa                      |")
@@ -10,22 +10,24 @@ while(True):
     print("|0. Thoát                              |")
     print("|--------------------------------------|")
     nhap = int(input('Chọn chức năng bạn muốn theo số: '))
+    
+    QuanLyNhanVien = QuanLyNhanVien()
     if nhap==1:
-        test.Them_Hoc_Vien()
+        QuanLyNhanVien.them()
     elif nhap==2:
-        if len(QuanLyHocVien.list_hoc_vien)!=0:
-            t= int(input('Nhập id học viên muốn sửa: '))
-            QuanLyHocVien.Sua_Thong_Tin_Hoc_Vien(t)
+        if len(QuanLyNhanVien.list_nhan_vien)!=0:
+            t= input('Nhập id học viên muốn sửa: ')
+            QuanLyNhanVien.sua(t)
         else:
             print('Hiện không có học viên nào, vui lòng thêm học viên!')
     elif nhap==3:
-        if len(QuanLyHocVien.list_hoc_vien)!=0:
-            t= int(input('Nhập id học viên muốn xóa: '))
-            QuanLyHocVien.Xoa_Hoc_Vien(t)
+        if len(QuanLyNhanVien.list_nhan_vien)!=0:
+            t= input('Nhập id học viên muốn xóa: ')
+            QuanLyNhanVien.xoa(t)
         else:
             print('Hiện không có học viên nào, vui lòng thêm học viên!')
     elif nhap==4:
-        QuanLyHocVien.Hien_Thi_Hoc_Vien()
+        QuanLyNhanVien.hien_thi()
     elif nhap==0:
         print('Thoát')
         break

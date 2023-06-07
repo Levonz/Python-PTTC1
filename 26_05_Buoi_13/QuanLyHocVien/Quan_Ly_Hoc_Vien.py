@@ -5,10 +5,10 @@ from PTTC1DinhNghia import PTTC1
 
 class QuanLyHocVien:
     list_hoc_vien =[]
-    def Them_Hoc_Vien():
+    def Them_Hoc_Vien(self):
         n = int(input("Nhập số lượng học viên: "))
-        for i in range(0,n):
-            print('Nhập thông tin học viên thứ',i+1)
+        for i in range(len(QuanLyHocVien.list_hoc_vien),len(QuanLyHocVien.list_hoc_vien)+n):
+            print('Nhập thông tin học viên mới: ')
             name= input('Tên: ')
             age = int(input('Tuổi: '))
             country = input('Quê quán:')
@@ -21,19 +21,31 @@ class QuanLyHocVien:
                 hoc_vien.xep_loai = 'Giỏi'
             else:
                 hoc_vien.xep_loai = 'Yếu'
-            QuanLyHocVien.list_hoc_vien.append(hoc_vien)
+            self.list_hoc_vien.append(hoc_vien)
+            
     
     def Sua_Thong_Tin_Hoc_Vien(t):
         for i in QuanLyHocVien.list_hoc_vien:
+            c=0
             if i.id ==t:
+                c=1
                 i.name = input('Nhập tên: ')   
                 i.age = int(input('Nhập tuổi: '))  
+                i.country = input('Quê quán:')
+                i.lop = input('Lớp: ')
+                i.diem_TA = float(input('Điểm Tiếng Anh:'))
+                i.diem_tin = float(input('Điểm Tin học: '))
+        if c==0:
+            print('Không tìm thấy ID')
     
     def Xoa_Hoc_Vien(t):
+        c=0
         for i in QuanLyHocVien.list_hoc_vien:
             if i.id == t:
+                c=1
                 QuanLyHocVien.list_hoc_vien.remove(i)
-         
+        if c==0:
+            print('Không tìm thấy ID')          
         
     def Hien_Thi_Hoc_Vien():
         print('{:<4} {:<10} {:<7} {:<10} {:<10} {:<10} {:<10} {:<10}'.format(
