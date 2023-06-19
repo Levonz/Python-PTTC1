@@ -1,5 +1,7 @@
 from Quan_Ly_Hoc_Vien import *
-test = QuanLyHocVien()
+import ConnectSql
+import mysql.connector
+
 while(True):
     print("|--------------------------------------|")
     print("|----Chuong trinh quan ly hoc vien     |")
@@ -11,22 +13,17 @@ while(True):
     print("|--------------------------------------|")
     nhap = int(input('Chọn chức năng bạn muốn theo số: '))
     if nhap==1:
-        test.Them_Hoc_Vien()
+        themHocVien()
     elif nhap==2:
-        if len(QuanLyHocVien.list_hoc_vien)!=0:
-            t= int(input('Nhập id học viên muốn sửa: '))
-            QuanLyHocVien.Sua_Thong_Tin_Hoc_Vien(t)
-        else:
-            print('Hiện không có học viên nào, vui lòng thêm học viên!')
+        id = input("Nhập Id học viên muốn sửa: ")
+        suaHocVien(id)
     elif nhap==3:
-        if len(QuanLyHocVien.list_hoc_vien)!=0:
-            t= int(input('Nhập id học viên muốn xóa: '))
-            QuanLyHocVien.Xoa_Hoc_Vien(t)
-        else:
-            print('Hiện không có học viên nào, vui lòng thêm học viên!')
+        id = input("Nhập Id học viên muốn xóa: ")
+        xoaHocVien(id)
     elif nhap==4:
-        QuanLyHocVien.Hien_Thi_Hoc_Vien()
+        getalldata()
     elif nhap==0:
+        ConnectSql.getConnection().close()
         print('Thoát')
         break
     else: 
