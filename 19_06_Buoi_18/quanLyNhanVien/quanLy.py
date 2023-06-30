@@ -61,16 +61,20 @@ def hienThiTatCa():
     print('{:<4} {:<15} {:<7} {:<10} {:<10} {:<13} {:<10}'.format(
             'ID','Name','Age','Country','Chuc Vu','So ngay lam','Luong'))
     for i in ketqua:
-        print('{:<4} {:<15} {:<7} {:<10} {:<10} {:<13} {:<10}'.format(
+        print('{:<4} {:<15} {:<7} {:<10} {:<10} {:<13} {:<10}đ'.format(
             i[-1],i[1],i[2],i[3],i[4],i[5],str(i[6])+'đ'))
         
 def themNhanVien():
-    t = int(input('Nhập số lượng học viên muốn thêm: '))
+    t = int(input('Nhập số lượng nhân viên muốn thêm: '))
     for i in range(0,t):
+        print('Nhan vien {}'.format(i+1))
         name = input('Name: ')
         age = int(input('Age: '))
         country = input('Country: ')
         Chucvu = input('Chuc vu: ')
+        while(Chucvu != 'NV' and 'TP' and 'GD'):
+            print('Khong co chuc vu do!')
+            Chucvu = input('Chuc vu: ')
         Songaylam = int(input('So ngay lam: '))
         dulieu.execute("INSERT INTO quan_ly_nhan_vien.nhanvien(`Name`,Age,Country,Chucvu,Songaylam) VALUES('{}','{}','{}','{}',{})"
                        .format(name,age,country,Chucvu,Songaylam))

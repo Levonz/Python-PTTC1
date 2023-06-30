@@ -26,7 +26,7 @@ while(True):
     elif nhap==5:
         sapxeptheoten()
     elif nhap==0:
-        ConnectSql.getConnection().close()
+        connectSql.getConnection().close()
         print('Thoát')
         break
     else: 
