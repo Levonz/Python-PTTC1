@@ -10,6 +10,7 @@ while(True):
     print("|3. Chuc nang Xóa                      |")
     print("|4. Chuc nang Hiển thị                 |")
     print("|5. Chuc nang sap xep theo ten         |")
+    print("|6. Xuat ra file txt                   |")
     print("|0. Thoát                              |")
     print("|--------------------------------------|")
     nhap = int(input('Chọn chức năng bạn muốn theo số: '))
@@ -25,6 +26,9 @@ while(True):
         hienThiTatCa()
     elif nhap==5:
         sapxeptheoten()
+    elif nhap==6:
+        xuatFile()
+        print("Đã xuất ra file .txt")
     elif nhap==0:
         connectSql.getConnection().close()
         print('Thoát')

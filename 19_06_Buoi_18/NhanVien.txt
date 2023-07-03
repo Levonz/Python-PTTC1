@@ -1,0 +1,8 @@
+ID   Name            Age     Country    Chuc Vu    So ngay lam   Luong     
+TP1  Quang Anh       22      Ha Noi     TP         27            12960000.0đđ
+GD1  Bach            25      Thai Binh  GD         28            16800000đ đ
+TP2  Quang           23      Ha Noi     TP         30            14400000.0đđ
+NV1  Giang           22      Ha Noi     NV         20            6000000đ  đ
+NV2  Do              23      Ha Noi     NV         29            8700000đ  đ
+NV3  Long            23      Ha Noi     NV         29            8700000đ  đ
+NV4  Dat             21      Ha Noi     NV         22            6600000đ  đ

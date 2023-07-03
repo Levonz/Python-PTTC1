@@ -128,5 +128,19 @@ def sapxeptheoten():
                 print('{:<4} {:<15} {:<7} {:<10} {:<10} {:<13} {:<10}'.format(
                     i[-1],i[1],i[2],i[3],i[4],i[5],str(i[6])+'đ'))
 
+
+def xuatFile():
+    ketqua =sinhId()
+    file = open('19_06_Buoi_18/NhanVien.txt','w', encoding = 'utf-8')
+    file.write('{:<4} {:<15} {:<7} {:<10} {:<10} {:<13} {:<10}'.format(
+            'ID','Name','Age','Country','Chuc Vu','So ngay lam','Luong'))
+    for i in ketqua:
+        
+        file.write("\n")
+        file.write('{:<4} {:<15} {:<7} {:<10} {:<10} {:<13} {:<10}đ'.format(
+                i[-1],i[1],i[2],i[3],i[4],i[5],str(i[6])+'đ'))
+    file.close()
 #sapxeptheoten()
-sinhId()
+def nhapTuFile():
+    
+
