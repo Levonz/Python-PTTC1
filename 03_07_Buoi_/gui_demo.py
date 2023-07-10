@@ -1,6 +1,8 @@
 import tkinter
+from tkinter.ttk import Combobox
+from tkinter.scrolledtext import *
 
-    
+
 def cong():
     tong = int(giatri1.get())+int(giatri2.get())
     giatri3.set(tong)
@@ -62,5 +64,11 @@ giatri3 = tkinter.IntVar()
 textbox3 = tkinter.Entry(giaodien,width='15',textvariable=giatri3)
 textbox3.grid(column=1,row=4)
 
+combobox = Combobox(giaodien)
+combobox['values'] = [1,2,3,'text']
+combobox.grid(column=3,row=5)
+
+scrolled = ScrolledText(giaodien,width = 20, height = 10)
+scrolled.grid(column=3,row=6)
 
 giaodien.mainloop()
