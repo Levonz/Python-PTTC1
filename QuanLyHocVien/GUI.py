@@ -1,117 +1,191 @@
-from tkinter import *
+import tkinter as tk
+from tkinter import ttk
 from tkinter.ttk import Combobox
 from tkinter.scrolledtext import *
+
 import ConnectSQL
 import mysql.connector
 
 ketnoi = ConnectSQL.getConnection()
 dulieu = ketnoi.cursor()
 
+# configure
 textBoxPadx =110
 textFont="Helvetica"
 bgColor="white"
 fgColor="black"
 
+# function
 def connectCheck():
     if ketnoi.is_connected()==True:
-        connectOP.set('Kết nối thành công!')
+        connectVar.set('Kết nối thành công!')
     else:
-        connectOP.set('Kết nối không thành công')
-def them():
-    name = nameI.get()
-    age = ageI.get()
-    country = countryI.get()
-    english = englishI.get()
-    information = informationI.get()
-    dulieu.execute("INSERT INTO quan_ly_hoc_vien.hocvien(`Name`,Age,Country,English,Information) VALUES('{}',{},'{}',{},{})".format(name,age,country,english,information))
+        connectVar.set('Kết nối không thành công')
+def add():
+    name = nameInput.get()
+    age = ageInput.get()
+    country = countryInput.get()
+    sex = sexCombobox.get()
+    english = englishInput.get()
+    information = informationInput.get()
+    dulieu.execute("INSERT INTO quan_ly_hoc_vien.hocvien(`Name`,Age,Country,Sex,English,Information) VALUES('{}',{},'{}','{}',{},{})".format(name,age,country,sex,english,information))
     ketnoi.commit()
-    addOP.set('Đã thêm')
+    addVar.set('Đã thêm')
+    
+def show():
+    dulieu.execute("SELECT * FROM quan_ly_hoc_vien.hocvien")
+    ketqua = dulieu.fetchall()
+    scrolled.delete("1.0","end")
+    str1 = ('{:<2}|{:<13}|{:<3}|{:<10}|{:<5}|{:<11}|{:<5}'.format(
+            'Id','Name','Age','Country','Sex','Information','English'))
+    scrolled.insert("end",str1 + "\n")
+    for i in ketqua:
+        str2 = ('{:<2}|{:<13}|{:<3}|{:<10}|{:<5}|{:<11}|{:<5}'.format(
+            i[0],i[1],i[2],i[3],i[4],i[5],i[6]))
+        scrolled.insert("end",str2 + "\n")
 
-def hienThi():
-    return
-#Khung giao dien
-giaodien = Tk()
-giaodien.title('Quản lý học viên')  #Tên Chương trình
-giaodien.geometry('500x500')        #Kích thước khung
-giaodien.configure(bg=bgColor)      #Đổi màu BG
+def delete():
+    dulieu.execute("SELECT * FROM quan_ly_hoc_vien.hocvien")
+    ketqua = dulieu.fetchall()
+    exist = False
+    idEntry["state"]= "enabled"
+    idLabelInput.set("Nhập Id")
+    id = int(idEntry.get())
+    for i in ketqua:
+        if i[0] == id:
+            exist = True
+            break
+    if exist == True:
+        sql = "DELETE FROM quan_ly_hoc_vien.hocvien WHERE Id = {}".format(id)
+        dulieu.execute(sql)
+        ketnoi.commit()
+    else:
+        idLabelInput.set("Id không tồn tại")
 
-#CHUONG TRINH QUAN LY HOC VIEN
-titleLabel = Label(giaodien,text="CHƯƠNG TRÌNH QUẢN LÝ HỌC VIÊN",fg=fgColor,bg=bgColor,font=(textFont,14))
-titleLabel.grid(row=0,column=0,padx=70)
+def change():
+    dulieu.execute("SELECT * FROM quan_ly_hoc_vien.hocvien")
+    ketqua = dulieu.fetchall()
+    exist = False
+    idEntry["state"]= "enabled"
+    idLabelInput.set("Nhập Id")
+    id = int(idEntry.get())
+    for i in ketqua:
+        if i[0] == id:
+            exist = True
+            break
+    if exist == True:
+        name = nameInput.get()
+        age = ageInput.get()
+        country = countryInput.get()
+        sex = sexCombobox.get()
+        english = englishInput.get()
+        information = informationInput.get()
+        sql ="UPDATE quan_ly_hoc_vien.hocvien SET `Name` = %s,Age = %s,Country = %s,English = %s,Information = %s WHERE Id = %s"
+        dulieu.execute(sql,(name,age,country,english,information,id))
+        ketnoi.commit()
+    else:
+        idLabelInput.set("Id không tồn tại")
 
-#Ten
-nameLabel = Label(giaodien,text="Tên:",fg=fgColor,bg=bgColor,font=(textFont,12))
-nameLabel.grid(row=1,column=0,sticky=W)
-#Ten textbox
-nameI = StringVar()
-nameTextBox = Entry(giaodien,width=50,textvariable=nameI)
-nameTextBox.grid(row=1,column=0,sticky=W,padx=textBoxPadx)
-#Tuoi
-ageLabel = Label(giaodien,text="Tuổi:",fg=fgColor,bg=bgColor,font=(textFont,12))
-ageLabel.grid(row=2,column=0,sticky=W)
-#Tuoi textbox
-ageI = IntVar()
-ageTextBox = Entry(giaodien,width=50,textvariable=ageI)
-ageTextBox.grid(row=2,column=0,sticky=W,padx=textBoxPadx)
-#QueQuan
-ageLabel = Label(giaodien,text="Quê Quán:",fg=fgColor,bg=bgColor,font=(textFont,12))
-ageLabel.grid(row=3,column=0,sticky=W)
-#QueQuan textbox
-countryI = StringVar()
-countryTextBox = Entry(giaodien,width=50,textvariable=countryI)
-countryTextBox.grid(row=3,column=0,sticky=W,padx=textBoxPadx)
-#GioiTinh
-sexLabel = Label(giaodien,text="Giới tính:",fg=fgColor,bg=bgColor,font=(textFont,12))
-sexLabel.grid(row=4,column=0,sticky=W)
-#GioiTinh combobox
-sexCombobox = Combobox(giaodien,width=47)
-sexCombobox['values'] = ['Nam','Nữ','Khác']
-sexCombobox.grid(row=4,column=0,sticky=W,padx=textBoxPadx)
-#Tin Hoc
-informationLabel = Label(giaodien,text="Tin học:",fg=fgColor,bg=bgColor,font=(textFont,12))
-informationLabel.grid(row=5,column=0,sticky=W)
-#Diem Tin textbox
-informationI = StringVar()
-informationTextBox = Entry(giaodien,width=50,textvariable=informationI)
-informationTextBox.grid(row=5,column=0,sticky=W,padx=textBoxPadx)
-#Diem Tieng Anh
-englishLabel = Label(giaodien,text="Tiếng Anh:",fg=fgColor,bg=bgColor,font=(textFont,12))
-englishLabel.grid(row=6,column=0,sticky=W)
-#Diem Tieng Anh textbox
-englishI = StringVar()
-englishTextBox = Entry(giaodien,width=50,textvariable=englishI)
-englishTextBox.grid(row=6,column=0,sticky=W,padx=textBoxPadx)
+# window
+window = tk.Tk()
+window.title('Quan Ly Hoc Vien')  #Tên Chương trình
+window.geometry('500x500')        #Kích thước khung
 
-#Them hoc Vien Button
-addButton = Button(giaodien,text='Thêm học viên',font=(textFont,12),fg=fgColor,bg=bgColor,command =them)
-addButton.grid(row=7,sticky='W',padx=0,pady=5)
-#Them hoc Vien Button
-addButton = Button(giaodien,text='Hiển thị học viên',font=(textFont,12),fg=fgColor,bg=bgColor)
-addButton.grid(row=7,sticky='W',padx=120)
-#Them hoc Vien Button
-addButton = Button(giaodien,text='Xóa học viên',font=(textFont,12),fg=fgColor,bg=bgColor)
-addButton.grid(row=8,sticky='W',padx=0,pady=5)
-#Them hoc Vien Button
-addButton = Button(giaodien,text='Sửa học viên',font=(textFont,12),fg=fgColor,bg=bgColor)
-addButton.grid(row=8,sticky='W',padx=120)
-#Da them
-addOP=StringVar()
-addOutput = Label(giaodien,font=(textFont,12),fg=fgColor,bg=bgColor
-                      ,textvariable=addOP)
-addOutput.grid(column=0,row=9)
+# title
+titleLabel = ttk.Label(master = window,text="CHƯƠNG TRÌNH QUẢN LÝ HỌC VIÊN")
+titleLabel.pack()
 
-#Scrolled
-scrolled = ScrolledText(giaodien,width = 50, height = 10)
-scrolled.grid(column=0,row=10,pady=5)
-#Kiểm tra kết nối Button
-addButton = Button(giaodien,text='Kiểm tra kết nối',font=(textFont,12),fg=fgColor,bg=bgColor
-                   ,command = connectCheck)
-addButton.grid(column=0,row=11)
-connectOP = StringVar()
-connectOutput = Label(giaodien,text='Kết nối thành công!',font=(textFont,12),fg=fgColor,bg=bgColor
-                      ,textvariable=connectOP)
-connectOutput.grid(column=0,row=12,pady=5)
+# name
+nameInputFrame = ttk.Frame(master = window)  
+nameInput = tk.StringVar()
+nameLabel = ttk.Label(master = nameInputFrame,text="Tên:")
+nameEntry = ttk.Entry(master = nameInputFrame,textvariable=nameInput)
+nameLabel.pack(side = "left", padx = 10)
+nameEntry.pack(side = "left")
+nameInputFrame.pack(anchor = "nw", pady = 5)
+# age
+ageInputFrame = ttk.Frame(master = window)
+ageInput = tk.IntVar()
+ageLabel = ttk.Label(master = ageInputFrame,text="Tuổi:")
+ageEntry = ttk.Entry(master = ageInputFrame,textvariable=ageInput)
+ageLabel.pack(side = "left", padx = 10)
+ageEntry.pack(side = "left")
+ageInputFrame.pack(anchor = "nw", pady = 5)
+# country
+countryInputFrame = ttk.Frame(master = window)
+countryInput = tk.StringVar()
+countryLabel = ttk.Label(master = countryInputFrame,text="Quê Quán:")
+countryEntry = ttk.Entry(master = countryInputFrame,textvariable=countryInput)
+countryLabel.pack(side = "left", padx = 10)
+countryEntry.pack(side = "left")
+countryInputFrame.pack(anchor = "nw", pady = 5)
+# sex
+sexInputFrame = ttk.Frame(master = window)
+sexLabel = ttk.Label(master = sexInputFrame,text="Giới tính:")
+sexCombobox = ttk.Combobox(master = sexInputFrame)
+sexCombobox['values'] = ['Male','Female','Others']
+sexLabel.pack(side = "left", padx = 10)
+sexCombobox.pack(side = "left")
+sexInputFrame.pack(anchor = "nw", pady = 5)
+# information
+informationInputFrame = ttk.Frame(master = window)
+informationInput = tk.StringVar()
+informationLabel = ttk.Label(master = informationInputFrame,text="Tin học:")
+informationEntry = ttk.Entry(master = informationInputFrame,textvariable=informationInput)
+informationLabel.pack(side = "left", padx = 10)
+informationEntry.pack(side = "left")
+informationInputFrame.pack(anchor = "nw", pady = 5)
+# english
+englishInputFrame = ttk.Frame(master = window)
+englishInput = tk.StringVar()
+englishLabel = ttk.Label(master = englishInputFrame,text="Tiếng Anh:")
+englishEntry = ttk.Entry(master = englishInputFrame,textvariable=englishInput)
+englishLabel.pack(side = "left", padx = 10)
+englishEntry.pack(side = "left")
+englishInputFrame.pack(anchor = "nw", pady = 5)
 
+# button
 
+buttonGroup1 = ttk.Frame(master = window)
+# add button
+addButton = ttk.Button(master = buttonGroup1,text='Thêm học viên',command = add)
+addButton.pack(side = "left",padx = 15)
+# show button
+showButton = ttk.Button(master = buttonGroup1,text='Hiển thị học viên',command = show)
+showButton.pack(side = "left",padx = 15)
+# id entry
+idInput = tk.StringVar()
+idLabelInput = tk.StringVar()
+idLabelInput.set("        ")
+idLabel = ttk.Label(master = buttonGroup1,textvariable = idLabelInput)
+idEntry = ttk.Entry(master = buttonGroup1,textvariable = idInput,state = "disabled")
+idLabel.pack(side = "left")
+idEntry.pack(side = "left")
+buttonGroup1.pack(anchor = "nw", pady = 5)
 
-giaodien.mainloop()
+buttonGroup2 = ttk.Frame(master = window)
+# delete button
+deleteButton = ttk.Button(master = buttonGroup2,text='Xóa học viên',command = delete)
+deleteButton.pack(side = "left",padx = 15)
+# change button
+changeButton = ttk.Button(master = buttonGroup2,text='Sửa học viên',command = change)
+changeButton.pack(side = "left")
+# add notice lable
+addVar = tk.StringVar()
+addNoticeLabel = ttk.Label(master = window,textvariable=addVar)
+addNoticeLabel.pack()
+buttonGroup2.pack(anchor = "nw", pady = 5)
+
+# scrolled
+scrolled = ScrolledText(master = window,width = 58, height = 10)
+scrolled.pack()
+
+# check connect button
+checkConnectButton = ttk.Button(master = window,text='Kiểm tra kết nối',command = connectCheck)
+checkConnectButton.pack()
+connectVar = tk.StringVar()
+connectOutputLabel = ttk.Label(master = window,text='Kết nối thành công!',textvariable=connectVar)
+connectOutputLabel.pack()
+
+# run
+window.mainloop()
