@@ -100,21 +100,18 @@ def result():
     
 # window
 window = tk.Tk()
-window.title = "Calculator"
-window.geometry = "500x800"
-
-
+window.title("Calculator")
 # widgets
 # row 1
 operator =""
 output = tk.StringVar()
 output.set(0)
 row1 = ttk.Frame(master = window)
-entry = ttk.Entry(master = row1,textvariable = output)
+entry = ttk.Entry(master = row1,width = "37",textvariable = output)
 entry.pack(side = "left")
 clearButton = ttk.Button(master = row1,text = "C",command = clear)
 clearButton.pack(side = "left")
-row1.pack(pady = 5)
+row1.pack(pady = 2)
 
 # row 2
 row2 = ttk.Frame(master = window)
@@ -126,7 +123,7 @@ button7.pack(side = "left")
 button8.pack(side = "left")
 button9.pack(side = "left")
 divButton.pack(side = "left")
-row2.pack(pady = 5)
+row2.pack(pady = 2)
 
 # row 3
 row3 = ttk.Frame(master = window)
@@ -138,7 +135,7 @@ button4.pack(side = "left")
 button5.pack(side = "left")
 button6.pack(side = "left")
 mulButton.pack(side = "left")
-row3.pack(pady = 5)
+row3.pack(pady = 2)
 
 # row 4
 row4 = ttk.Frame(master = window)
@@ -150,26 +147,26 @@ button1.pack(side = "left")
 button2.pack(side = "left")
 button3.pack(side = "left")
 minButton.pack(side = "left")
-row4.pack(pady = 5)
+row4.pack(pady = 2)
 
 # row 5
 row5 = ttk.Frame(master = window)
-button0 = ttk.Button(master = row5,text = "0",command = zero)
+button0 = ttk.Button(master = row5,text = "0",width = "24",command = zero)
 dotButton = ttk.Button(master = row5,text = ".",command = dot)
 plusButton = ttk.Button(master = row5,text = "+",command = plus)
 button0.pack(side = "left")
-dotButton.pack(side = "left")
 plusButton.pack(side = "left")
-row5.pack(pady = 5)
+dotButton.pack(side = "left")
+row5.pack(pady = 2)
 
 
 # row 6
 row6 = ttk.Frame(master = window)
-resultButton = ttk.Button(master = row6, text = "=",command = result)
+resultButton = ttk.Button(master = row6, text = "=",width = "37",command = result)
 modButton = ttk.Button(master = row6, text = "%",command = mod)
 resultButton.pack(side = "left")
 modButton.pack(side = "left")
-row6.pack()
+row6.pack(pady = 2)
 
 # run
 window.mainloop()
