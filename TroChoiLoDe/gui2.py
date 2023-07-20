@@ -32,16 +32,23 @@ def randomKetQua():
                                                str(ketQua[7][3])))
     return ketQua
 
+def hetTien():
+    tienConLai = tien.get()
+    if tienConLai<=0:
+        tienConLaiEntry["state"] ="disable"
+        choiButton["state"] = "disable"
+        choiButton1["state"] = "disable"
+
 def choiDe():
     so = soDe.get()
     diem = int(soDiemDe.get())
     tienConLai = tien.get()
     ketQua = randomKetQua()
     if (so) == str(ketQua[0]%100):
-        tien.set(tienConLai+diem*23000)
+        tien.set(tienConLai+diem*23000*70)
     else:
         tien.set(tienConLai-diem*23000)
-
+    hetTien()
 def choiLo():
     so = soLo.get()
     diem = int(soDiemLo.get())
@@ -80,12 +87,17 @@ def choiLo():
     ketQuaLo.append(str(ketQua[7][2]%100))
     ketQuaLo.append(str(ketQua[7][3]%100))
     
+    trung = False
     for i in ketQuaLo:
         if so == i:
-            tien.set(tienConLai+diem*1000)   
-        else:
-            tien.set(tienConLai-diem*1000)
-    
+            trung = True
+            break
+        
+    if trung == True:    
+        tien.set(tienConLai+diem*1000*3)
+    else:
+        tien.set(tienConLai-diem*1000)
+    hetTien()
 
 
 # window
